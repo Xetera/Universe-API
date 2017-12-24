@@ -29,7 +29,7 @@ export class World {
     public name : string;
     public people : Array<Person>;
     public averageLifespan : number = 90;
-    
+
 
     constructor(name : string){
         this.name = name;
