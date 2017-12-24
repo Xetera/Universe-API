@@ -1,6 +1,6 @@
 import {female_names, genders, male_names} from "./Constants"
 import {World} from "./Space";
-
+import {Utility} from "./Utility"
 
 export class Person {
     public name :string;
@@ -24,11 +24,13 @@ export class Person {
     }
 
     static generateAge(lifespan: number) : number {
-        return  Math.floor(Math.random() * lifespan);
+        let age = Utility.randomInt(lifespan);
+        return age
+
     }
 
     static generateGender() : string {
-        let index : number = Math.floor(Math.random() * 2);
+        let index : number = Utility.randomInt(2);
         return genders[index];
     }
 
@@ -44,7 +46,7 @@ export class Person {
             throw new Error(`${gender} is not a gender (sorry it's just easier this way)`)
         }
 
-        let index : number = Math.floor(Math.random() * name_pool.length);
+        let index : number = Utility.randomInt(name_pool.length);
         return name_pool[index];
     }
 

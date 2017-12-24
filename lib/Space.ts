@@ -1,6 +1,11 @@
 import {Person} from "./People";
 import {Utility} from "./Utility";
 
+
+//// ---------------------------------------------------------------------
+//?/ ------------------------- Universe Class ----------------------------
+//// ---------------------------------------------------------------------
+
 export class Universe {
     worlds : Array<Object>;
     name : string;
@@ -36,17 +41,17 @@ export class World {
         this.people = [];
     }
 
-    createPerson(born : Boolean, age : number, name?: string, gender ?: string){
+    createPerson(born : Boolean, age ?: number, name?: string, gender ?: string){
         let person : Person = new Person(this, born, age, name, gender);
         this.people.push(person);
         return person;
     }
 
-    get population() : number{
+    get population() : number {
         return this.people.length;
     }
 
-    get genderDivision() : Object{
+    get genderDivision() : Object {
         let genderBreakdown =
             {
                 "Male": {
@@ -66,8 +71,18 @@ export class World {
                 genderBreakdown['Female']["Amount"] += 1;
             }
         }
-        genderBreakdown["Male"]["Percent"] = Utility.getPercentage(genderBreakdown["Male"]["Amount"], this.population).toString() + "%";
-        genderBreakdown["Female"]["Percent"] = Utility.getPercentage(genderBreakdown["Female"]["Amount"], this.population).toString() + '%';
+        genderBreakdown["Male"]["Percent"] =
+            Utility.getPercentage(genderBreakdown["Male"]["Amount"], this.population).toString() + "%";
+        genderBreakdown["Female"]["Percent"] =
+            Utility.getPercentage(genderBreakdown["Female"]["Amount"], this.population).toString() + '%';
         return genderBreakdown;
+    }
+    get averageAge() : number {
+        let average : number = 0;
+        for (let i of this.people) {
+            average += i.age;
+        }
+        average /= this.people.length;
+        return parseInt(average.toFixed(2));
     }
 }
