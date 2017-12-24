@@ -9,10 +9,14 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@types/mongoose": "^4.7.30",
     "express": "^4.16.2",
     "http": "0.0.0",
     "mongoose": "^4.10.8",
     "node-fetch": "^1.7.3",
     "socket.io": "^2.0.4"
+  },
+  "devDependencies": {
+    "@types/mongoose": "^4.7.30"
   }
 }

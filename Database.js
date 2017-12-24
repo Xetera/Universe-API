@@ -1,41 +1,58 @@
+"use strict";
 const mongoose = require("mongoose");
 
 class Database {
-    constructor(){
-        this.connect();
+    constructor() {
+        this.conn = Database.connect();
         this.schema = mongoose.Schema;
-        this.userDataSchema = new this.schema({
-            title: String,
-            content: String,
-            author: String
+        this.peopleSchema = this.createPeopleSchema();
+        this.peopleData = mongoose.model('peopleData', this.peopleSchema);
+    }
+
+    static connect() {
+        return mongoose.connect('mongodb://localhost:3030/test');
+
+    };
+    createPeopleSchema() {
+        return this.schema({
+            world: String,
+            gender: String,
+            name: String,
+            age: Number
         });
+    };
+    savePerson(data){
+        let thingy = new this.peopleData(data);
+        thingy.save();
+        console.log("Data was saved.")
     }
-    connect(){
-        this.conn = mongoose.connect('mongodb://localhost:3030/test');
-        //this.model = this.connection.model('ModelName', schema)
-    }
-    save(){
-
-    }
-
-
-    get(){
-        console.log(this.conn)
+    getPeople(age){
+        database.peopleData.find(age)
+            .then(function (doc) {
+                console.log(doc);
+            });
     }
 
-    close(){
+    get() {
+        console.log(this.conn);
+    }
+    close() {
         this.conn.close();
     }
-
-
 }
+
 
 let database = new Database();
-database.get();
-while (true) {
+// console.log(database.peopleData);
 
-    database.conn.on('disconnect', function(){
-        console.log('disconnected');
-    })
+let toSave = {
+    world: "Something",
+    gender: "Female",
+    name: "Ahmad",
+    age: 10
+};
 
-}
+database.savePerson(toSave);
+database.getPeople(10);
+
+

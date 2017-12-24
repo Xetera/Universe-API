@@ -24,8 +24,7 @@ export class Person {
     }
 
     static generateAge(lifespan: number) : number {
-        let age = Utility.randomInt(lifespan);
-        return age
+        return Utility.randomInt(lifespan);
 
     }
 
