@@ -1,27 +1,40 @@
 import {female_names, genders, male_names} from "./Constants"
 import {World} from "./Space";
 import {Utility} from "./Utility"
+import * as mysql from "mysql"
+const Database = require("./Database");
 
+import Database from "../Database"
 export class Person {
+
+    public ID : number;
+    public world : World;
+    public gender : string;
     public name :string;
     public age : number;
+    public growth : number;
     public owned : Array<Object>;
-    public gender : string;
-
-    public world : World;
+    public database : Database;
 
     constructor(world : World, born : Boolean, age ?: number, name ?: string,  gender ?: string){
+        this.ID = Utility.generateID();
         this.world = world;
+
         this.gender = gender || Person.generateGender();
         this.name = name || Person.generateName(this.gender);
+
         if (!born){
             this.age = age || Person.generateAge(world.averageLifespan);
         }
         else {
             this.age = 0;
         }
-
+        this.growth = 0;
+        this.owned = [];
+        this.database = new Database.Database();
     }
+
+
 
     static generateAge(lifespan: number) : number {
         return Utility.randomInt(lifespan);
@@ -47,6 +60,10 @@ export class Person {
 
         let index : number = Utility.randomInt(name_pool.length);
         return name_pool[index];
+    }
+
+    save(){
+        this.database.savePerson()
     }
 
 }

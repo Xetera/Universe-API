@@ -1,15 +1,21 @@
-
 'use strict';
 const mongoose = require('mongoose');
-
+const database = require('../Database');
 let express = require('express');
 
 let app = require('express')();
 let server = require('http').createServer(app);
 let io = require('socket.io')(server);
 
+class API extends database {
+    constructor(){
+        super();
 
+    }
+    connect(){
 
+    }
+}
 
 let universe = require('../lib/Runtime.js');
 
