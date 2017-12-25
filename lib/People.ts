@@ -2,9 +2,10 @@ import {female_names, genders, male_names} from "./Constants"
 import {World} from "./Space";
 import {Utility} from "./Utility"
 import * as mysql from "mysql"
-const Database = require("./Database");
+import {Database} from "../Work"
 
-import Database from "../Database"
+
+
 export class Person {
 
     public ID : number;
@@ -31,9 +32,13 @@ export class Person {
         }
         this.growth = 0;
         this.owned = [];
-        this.database = new Database.Database();
+        this.database = new Database();
+        this.save();
     }
 
+    progress(){
+
+    }
 
 
     static generateAge(lifespan: number) : number {
@@ -63,7 +68,7 @@ export class Person {
     }
 
     save(){
-        this.database.savePerson()
+        this.database.savePerson(this.ID, this.world.name, this.name, this.gender, this.age)
     }
 
 }

@@ -8,7 +8,7 @@ module.exports.Database = class Database {
         this._user = config.Username;
         this._password = config.Password;
         this._database = config.Database;
-
+        
         this.connect().then(function(conn) {
             if (conn){
                 console.log(`Connected to ${this._database} as ${this._user}@${this._host}:${config.Port}`)

@@ -21,6 +21,3 @@ export namespace Utility {
 }
 
 
-
-
-console.log(Utility.generateID());
