@@ -2,4 +2,6 @@
 GET http://localhost:3030/
 
 ###
+GET http://localhost:3030/population/Earth
 
+###

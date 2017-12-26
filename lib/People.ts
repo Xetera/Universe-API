@@ -1,8 +1,8 @@
 import {female_names, genders, male_names} from "./Constants"
 import {World} from "./Space";
 import {Utility} from "./Utility"
-import * as mysql from "mysql"
-import {Database} from "../Work"
+
+import {Database} from "../Database"
 
 
 
@@ -17,7 +17,7 @@ export class Person {
     public owned : Array<Object>;
     public database : Database;
 
-    constructor(world : World, born : Boolean, age ?: number, name ?: string,  gender ?: string){
+    constructor(world : World, born : Boolean, database : Database, age ?: number, name ?: string,  gender ?: string){
         this.ID = Utility.generateID();
         this.world = world;
 
@@ -32,7 +32,7 @@ export class Person {
         }
         this.growth = 0;
         this.owned = [];
-        this.database = new Database();
+        this.database = database;
         this.save();
     }
 
@@ -67,8 +67,15 @@ export class Person {
         return name_pool[index];
     }
 
-    save(){
-        this.database.savePerson(this.ID, this.world.name, this.name, this.gender, this.age)
+    save() : Promise<Boolean>{
+        return new Promise((resolve, reject)  => {
+            let result = this.database.savePerson(this.ID, this.world.name, this.name, this.gender, this.age);
+            if (!result){
+                reject(result)
+            }
+            resolve(result)
+
+        });
     }
 
 }
