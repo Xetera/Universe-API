@@ -246,5 +246,10 @@ let female_list : string = "Emma\n" +
     "Athena\n" +
     "Amy";
 
-export let female_names : Array< string > = female_list.split('\n');
+export let female_names : Array < string > = female_list.split('\n');
 export let male_names : Array < string > = male_list.split('\n');
+
+export enum EGenders {
+    Male,
+    Female
+}

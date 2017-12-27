@@ -1,4 +1,4 @@
-import {female_names, genders, male_names} from "./Constants"
+import {female_names, genders, male_names, EGenders} from "./Constants"
 import {World} from "./Space";
 import {Utility} from "./Utility"
 
@@ -10,14 +10,14 @@ export class Person {
 
     public ID : number;
     public world : World;
-    public gender : string;
+    public gender : EGenders;
     public name :string;
     public age : number;
     public growth : number;
     public owned : Array<Object>;
     public database : Database;
 
-    constructor(world : World, born : Boolean, database : Database, age ?: number, name ?: string,  gender ?: string){
+    constructor(world : World, born : Boolean, database : Database, age ?: number, name ?: string,  gender ?: EGenders){
         this.ID = Utility.generateID();
         this.world = world;
 
@@ -46,17 +46,21 @@ export class Person {
 
     }
 
-    static generateGender() : string {
+    // this function should really be returning a gender definition in an enum
+    static generateGender() : EGenders {
         let index : number = Utility.randomInt(2);
-        return genders[index];
+        if (index == 0){
+            return EGenders.Male
+        }
+        return EGenders.Female
     }
 
-    static generateName(gender : string) : string {
+    static generateName(gender : EGenders) : string {
         let name_pool : Array<string>;
-        if (gender === "Male"){
+        if (gender === EGenders.Male){
             name_pool = male_names;
         }
-        else if (gender === "Female") {
+        else if (gender === EGenders.Female) {
             name_pool = female_names;
         }
         else {
@@ -69,7 +73,7 @@ export class Person {
 
     save() : Promise<Boolean>{
         return new Promise((resolve, reject)  => {
-            let result = this.database.savePerson(this.ID, this.world.name, this.name, this.gender, this.age);
+            let result = this.database.savePerson(this.ID, this.world.name, this.name, this.gender.toString(), this.age);
             if (!result){
                 reject(result)
             }

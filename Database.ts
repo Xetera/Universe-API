@@ -5,13 +5,13 @@ import * as mysql from "promise-mysql"
 import {World} from "./lib/Space";
 
 export class Database {
-    _opts : Object;
+    public conn : Promise<mysql.Connection>;
 
-    _host : string;
-    _user : string;
-    _password : string;
-    _database : string;
-    conn : Promise<mysql.Connection>;
+    private _opts : Object;
+    private _host : string;
+    private _user : string;
+    private _password : string;
+    private _database : string;
 
     constructor() {
 
@@ -39,8 +39,9 @@ export class Database {
         })
     }
     */
+
     query(query : string, array ?: Array<any> | Object) : Promise<Object> {
-        let db = this.conn;
+        let db = this.conn; // Promises don't have access to this... I think
         return new Promise(function (resolve, reject) {
 
             db.then(function (connection) {
@@ -59,13 +60,16 @@ export class Database {
     }
 
 
-    savePerson(id : number, world : string, name : string, gender : string, age : number) : Boolean {
+    savePerson(id : number, world : string, name : string, gender : string, age : number) : any {
+        // for some reason setting the return type to Boolean doesn't work, so we have to go with any
+
         this.conn.then((connection) => {
+            // no need to sanitize any sort of values since it's not input
             return connection.query(`INSERT INTO people VALUES('${id}', '${world}', '${name}', '${gender}', '${age}')`)
                 })
                 .then(function (resp : any ) {
-                    console.log(typeof resp);
                     if (resp['affectedRows'] === 1) {
+                        // only one row is affected if successful
                         return true;
                     }
                 })
