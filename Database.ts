@@ -1,7 +1,6 @@
-import * as pmysql from "promise-mysql"
 const config = require('./Private');
+import * as pmysql from "promise-mysql"
 import * as mysql from "promise-mysql"
-
 import {World} from "./lib/Space";
 
 export class Database {

@@ -1,5 +1,6 @@
 import {Person} from "./People";
 import {Utility} from "./Utility";
+import {EGenders} from "./Constants";
 
 
 //// ---------------------------------------------------------------------
@@ -64,10 +65,10 @@ export class World {
                 }
             };
         for (let i of this.people){
-            if (i.gender === "Male") {
+            if (i.gender === EGenders.Male) {
                 genderBreakdown["Male"]["Amount"] += 1;
             }
-            else if (i.gender === "Female"){
+            else if (i.gender === EGenders.Female){
                 genderBreakdown['Female']["Amount"] += 1;
             }
         }
